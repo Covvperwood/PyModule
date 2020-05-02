@@ -5,6 +5,7 @@ PyObject *mvn( PyObject *self, PyObject *args, PyObject *kwargs )
     int *vec;
     int *num;
     int n,i;
+    printf("size of vec\n");
     scanf("%d", &n);
     vec = (int*)malloc(n * sizeof(int));
     for (i = 0; i<n; i++)
@@ -16,7 +17,7 @@ PyObject *mvn( PyObject *self, PyObject *args, PyObject *kwargs )
     scanf("%d",num);
     static char *keywords[] = {"vec", "num", NULL};
  
-    if (PyArg_ParseTupleAndKeywords(args, kwargs, "s", keywords, &vec, &num))
+    if (PyArg_ParseTupleAndKeywords(args, kwargs, "0", keywords, &vec, &num))
     {
         return PyUnicode_FromFormat("Result:", *vec * *num);
     }
@@ -43,7 +44,7 @@ static struct PyModuleDef mvnlib_module =
 };
  
  
-PyMODINIT_FUNC PyInit_example(void)
+PyMODINIT_FUNC PyInit_mvnlib(void)
 {
     return PyModule_Create(&mvnlib_module);
 }
