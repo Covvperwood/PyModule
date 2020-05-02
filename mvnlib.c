@@ -2,21 +2,35 @@
 
 PyObject *mvn( PyObject *self, PyObject *args, PyObject *kwargs )
 {
-    int *vec[1] = {1};
-    int *num = 1;
+    int *vec;
+    int *num;
+    int n,i;
+    scanf("%d", &n);
+    vec = (int*)malloc(n * sizeof(int));
+    for (i = 0; i<n; i++)
+    {
+       printf("vec[%d] = ", i);
+       scanf("%d", &vec[i]);
+    }
+    printf("num = ");
+    scanf("%d",num);
     static char *keywords[] = {"vec", "num", NULL};
  
     if (PyArg_ParseTupleAndKeywords(args, kwargs, "s", keywords, &vec, &num))
     {
-        return PyUnicode_FromFormat("Result:", vec*num);
+        return PyUnicode_FromFormat("Result:", *vec * *num);
     }
     return NULL;
 }
 
-static PyMethodDef mvnlib_methods[] = 
-{
-    { "mvn", (PyCFunction) mvn, METH_KEYWORDS, "mvn([1,2],[2]) -- return \"[2,4]"" },
-    { NULL, 0, 0, NULL }
+static PyMethodDef mvnlib_methods[] = {
+    {
+        "mvn", // name of fucntion in python interpreter
+        mvn, // function C declaration
+        METH_VARARGS, // special macros about function arguments
+        "multiply vector and number" // doc for function in python interpreter
+    },
+    { NULL, NULL, 0, NULL }
 };
 
 static struct PyModuleDef mvnlib_module = 
