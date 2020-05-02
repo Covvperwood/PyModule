@@ -1,28 +1,41 @@
 #include <Python.h>
-
-PyObject *mvn( PyObject *self, PyObject *args, PyObject *kwargs )
+#define N 2
+PyObject *mvn( PyObject *self, PyObject *args)
 {
-    int *vec;
-    int *num;
-    int n,i;
-    printf("size of vec\n");
-    scanf("%d", &n);
-    vec = (int*)malloc(n * sizeof(int));
-    for (i = 0; i<n; i++)
+    PyObject* list1;
+    PyObject* list2;
+    int i;
+    double vec, num;
+
+    int *A = (int*)malloc(N * sizeof(int));
+    for (i = 0; i<N; i++)
     {
-       printf("vec[%d] = ", i);
-       scanf("%d", &vec[i]);
+       A[i] = (int*)malloc(N * sizeof(int));
     }
-    printf("num = ");
-    scanf("%d",num);
-    static char *keywords[] = {"vec", "num", NULL};
- 
-    if (PyArg_ParseTupleAndKeywords(args, kwargs, "0", keywords, &vec, &num))
-    {
-        return PyUnicode_FromFormat("Result:", *vec * *num);
+
+    if (!PyArg_ParseTuple(args, "OO", &list1, &list2)){
+        return NULL;
     }
-    return NULL;
+
+    for (i=0; i<N; i++){
+        PyObject* item1 = PySequence_Fast_GET_ITEM(list1, i);
+	A[i] = PyFloat_AsDouble(item1);
+	}
+    
+
+    
+    PyObject* item2 = PySequence_Fast_GET_ITEM(list2, 0);
+    num = PyFloat_AsDouble(item2);
+
+    for(i=0; i<N;i++){
+        A[i]=A[i]*num;
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+    return Py_None;
+
 }
+
 
 static PyMethodDef mvnlib_methods[] = {
     {
