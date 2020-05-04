@@ -50,8 +50,8 @@ static PyMethodDef mvnlib_methods[] = {
 static struct PyModuleDef mvnlib_module = 
 {
     PyModuleDef_HEAD_INIT,
-    "mvn",
-    NULL,
+    "mvnlib",  // mvnlib.__name__
+    "Python interface for the mvn C library function", // mvnlib.__doc__
     -1,
     mvnlib_methods
 };
